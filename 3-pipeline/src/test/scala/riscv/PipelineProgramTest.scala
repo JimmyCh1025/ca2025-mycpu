@@ -36,7 +36,28 @@ class PipelineProgramTest extends AnyFlatSpec with ChiselScalatestTester {
         c.io.mem_debug_read_data.expect(55.U)
       }
     }
+    
+    it should "LC3370 program" in {
+      runProgram("LC3370.asmbin",cfg) { c =>
+        for (i <- 1 to 50) {
+          c.clock.step(1000)
+          c.io.mem_debug_read_address.poke((i * 4).U) // Avoid timeout
+        }
 
+        c.io.mem_debug_read_address.poke(4.U)
+        c.clock.step()
+        c.io.mem_debug_read_data.expect(1.U)
+      
+        c.io.mem_debug_read_address.poke(8.U)
+        c.clock.step()
+        c.io.mem_debug_read_data.expect(511.U)
+      
+        c.io.mem_debug_read_address.poke(12.U)
+        c.clock.step()
+        c.io.mem_debug_read_data.expect(1023.U)
+      }
+    }
+    
     it should "quicksort 10 numbers" in {
       runProgram("quicksort.asmbin", cfg) { c =>
         for (i <- 1 to 50) {

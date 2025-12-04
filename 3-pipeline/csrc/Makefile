@@ -1,7 +1,7 @@
 CROSS_COMPILE ?= $(HOME)/riscv/toolchain/bin/riscv-none-elf-
 
 ASFLAGS = -march=rv32i_zicsr -mabi=ilp32
-CFLAGS = -O0 -Wall -march=rv32i_zicsr -mabi=ilp32
+CFLAGS = -O0 -Wall -march=rv32i_zicsr -mabi=ilp32 
 LDFLAGS = --oformat=elf32-littleriscv
 
 AS := $(CROSS_COMPILE)as
@@ -23,11 +23,12 @@ OBJCOPY := $(CROSS_COMPILE)objcopy
 
 BINS = \
 	fibonacci.asmbin \
+	LC3370.asmbin \
 	hazard.asmbin \
 	quicksort.asmbin \
 	sb.asmbin \
 	uart.asmbin \
-	irqtrap.asmbin
+	irqtrap.asmbin 
 
 # Clear the .DEFAULT_GOAL special variable, so that the following turns
 # to the first target after .DEFAULT_GOAL is not set.

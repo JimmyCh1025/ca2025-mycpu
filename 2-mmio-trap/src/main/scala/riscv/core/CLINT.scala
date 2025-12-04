@@ -109,7 +109,6 @@ class CLINT extends Module {
   when(io.interrupt_flag =/= InterruptCode.None && interrupt_enable_global && interrupt_source_enabled) { // interrupt
     io.interrupt_assert          := true.B
     io.interrupt_handler_address := io.csr_bundle.mtvec
-    // TODO: Complete mstatus update logic for interrupt entry
     // Hint: mstatus bit layout (showing only relevant bits):
     //   [31:13] | [12:11:MPP] | [10:8] | [7:MPIE] | [6:4] | [3:MIE] | [2:0]
     // Need to:
@@ -184,7 +183,6 @@ class CLINT extends Module {
   }.elsewhen(io.instruction === InstructionsRet.mret) { // ret
     io.interrupt_assert          := true.B
     io.interrupt_handler_address := io.csr_bundle.mepc
-    // TODO: Complete mstatus update logic for MRET
     // Hint: mstatus bit layout (showing only relevant bits):
     //   [31:13] | [12:11:MPP] | [10:8] | [7:MPIE] | [6:4] | [3:MIE] | [2:0]
     // Need to:
